@@ -7,17 +7,18 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class UsersService {
+  private userUrl = 'http://localhost:3000/users';
 
   constructor(private  http: HttpClient) {}
 
   getUserByEmail(email: String): Observable<User> {
-    return this.http.get<User>('http://localhost:3000/users?email=${email}')
+    return this.http.get<User[]>(this.userUrl + '?email=' + email)
       .pipe(
         map(response => {
           return response;
         }),
-        map((user: User) => {
-          return user ? user : undefined;
+        map((users: User[]) => {
+          return users[0] ? users[0] : undefined;
         }));
 
 
