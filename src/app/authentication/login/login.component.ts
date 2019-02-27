@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UsersService} from '../../shared/services/users.service';
 import {User} from '../../shared/models/user.model';
 import {Message} from '../../shared/models/message.model';
+import {AuthenticationService} from '../../shared/services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'isd-login',
@@ -14,7 +16,9 @@ export class LoginComponent implements OnInit {
 
   message: Message;
   constructor(
-    private usersService: UsersService
+    private usersService: UsersService,
+    private  authenticationService: AuthenticationService,
+    private  router: Router
   ) {
   }
 
@@ -40,6 +44,10 @@ export class LoginComponent implements OnInit {
       .subscribe((user: User) => {
         if (user) {
           if (user.password === formData.password) {
+            this.message.text = '';
+            window.localStorage.setItem('user', JSON.stringify(user));
+            this.authenticationService.login();
+            this.router.navigate(['']);
           } else { this.showMessage('Wrong password'); }
         } else {
           this.showMessage('User does not exist');

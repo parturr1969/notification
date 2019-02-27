@@ -34,10 +34,10 @@
       placeholder="Пароль"
       formControlName="password"
     >
-    <span class="form-help-text" *ngIf="form.get('email').invalid && form.get('email').touched"
+    <span class="form-help-text" *ngIf="form.get('password').invalid && form.get('password').touched"
     >
       <span *ngIf="form.get('password')['errors']['required']">Password should be filled</span>
-      <span *ngIf="form.get('password')['errors']['minlength']"
+      <span *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength'] ['requiredLength']"
       >
         Password must be greater
       {{ form.get('password')['errors']['minlength'] ['requiredLength']}}
@@ -53,7 +53,7 @@
   </div>
   <div class="form-group">
     <p class="text-muted text-xs-center">
-      Нет аккаунта? <a href="#">Зарегистрироваться!</a>
+      Нет аккаунта? <a [routerLink]="'/registration'">Зарегистрироваться!</a>
     </p>
   </div>
 </form>
