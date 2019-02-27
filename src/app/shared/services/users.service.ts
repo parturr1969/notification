@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../models/user.model';
 import { map } from 'rxjs/operators';
+import {pipe} from 'rxjs/internal/util/pipe';
 
 
 @Injectable()
@@ -12,25 +13,27 @@ export class UsersService {
   constructor(private  http: HttpClient) {}
 
   getUserByEmail(email: String): Observable<User> {
-    return this.http.get<User[]>(this.userUrl + '?email=' + email)
+    return this.http.get<User>(this.userUrl + '?email=' + email)
       .pipe(
         map(response => {
           return response;
         }),
-        map((users: User[]) => {
-          return users[0] ? users[0] : undefined;
+        map((users: User) => {
+          return users ? users : undefined;
         }));
   }
 
-  // createNewUser(user: User): Observable<User> {
-  //
-  //   return null;
-    // return this.http.post(this.userUrl, user);
-      // .pipe(
-      // map((response: Response) => response.json()));
-  // }
-
-  // createNewUser(): Observable<User> {
-  //   return null;
-  // }
+  createNewUser(user: User): Observable<User> {
+      return this.http.post<User>(this.userUrl, user)
+        .pipe(
+          map(response => {
+            return response;
+          }),
+          map((userok: User) => {
+            return userok;
+          }));
+  }
 }
+
+
+

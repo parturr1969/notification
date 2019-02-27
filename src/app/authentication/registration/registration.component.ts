@@ -28,9 +28,9 @@ export class RegistrationComponent implements OnInit {
    const {email, password, name} = this.form.value;
    const  user = new User(email, password, name );
 
-    // this.usersService.createNewUser(user)
-    //   .subscribe((userSubscribe: User) => {
-    //     console.log(user);
-    //   });
+    this.usersService.createNewUser(user)
+      .subscribe((userSubscribe: User) => {
+        console.log(user);
+      });
   }
 }
