@@ -13,13 +13,13 @@ export class UsersService {
   constructor(private  http: HttpClient) {}
 
   getUserByEmail(email: String): Observable<User> {
-    return this.http.get<User>(this.userUrl + '?email=' + email)
+    return this.http.get<User[]>(this.userUrl + '?email=' + email)
       .pipe(
         map(response => {
           return response;
         }),
-        map((users: User) => {
-          return users ? users : undefined;
+        map((users: User[]) => {
+          return users[0] ? users[0] : undefined;
         }));
   }
 
